@@ -2,7 +2,7 @@
 
 ## Features
 
-The application has some features, namely `user creation`, `authentication` and search for `currency conversion`.
+The application has some features, namely `user creation` and `authentication`.
 
 - `User creation` is done in a simple way using bcrypt to generate hash's and encrypt passwords, it is also used together with JWT to create access token.
 
