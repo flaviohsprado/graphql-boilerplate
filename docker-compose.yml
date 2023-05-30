@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "postdba"
+      POSTGRES_DB: "supernova-development"
+    volumes:
+      - /data/postgres:/data/postgres
+    networks:
+      - postgres
+
+  pgadmin:
+    links:
+      - postgres:postgres
+    container_name: pgadmin
+    depends_on:
+      - postgres
+    image: dpage/pgadmin4
+    ports:
+      - "8081:80"
+    volumes:
+      - /data/pgadmin:/root/.pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "user@mail.com"
+      PGADMIN_DEFAULT_PASSWORD: "123456"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    networks:
+      - postgres
+
+  cache:
+    image: "bitnami/redis:latest"
+    ports:
+      - '6379:6379'
+
+
+networks:
+  postgres:
+    driver: bridge
+  cache:
+    driver: local
